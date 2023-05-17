@@ -85,5 +85,28 @@ Un ejemplo de payload es:
     "region": "Prague"
   }
 ```
+
+## Artillery
+Con artillery se puede generar pruebas de carga y estrés sobre el backend realizado. Un ejemplo de prueba de carga es el siguiente:
+``` yml
+config:
+  target: "http://localhost:5000"
+  phases:
+    - duration: 30
+      arrivalRate: 100
+      name: Carga de datos
+scenarios:
+  - flow:
+      - get:
+          url: "/trips/post_random_trip"
+```   
+En esta prueba, en duration se indica la duración de la prueba de estrés y en arrivalRate se indica cuantas peticiones se hará por segundo al url que se encuentra en scenarios. Con "/trips/post_random_trip" se puede probar la ingesta masiva de datos, haciendo 100 llamadas por segundo a dicha ruta generando por cada llamada un viaje aleatorio en la base de datos.
+    
+
+## MEJORAS
+Una forma de mejorar el backend creado, es montar el backend en un kubernete para distribuir las peticiones realizadas.
+
+También si bien no se realiza el informador del estado de ingesta de datos, se puede crear una tabla nueva en la base datos
+que mantenga un log de la ingesta de los datos. Luego crearía un servicio en Google Cloud Functions que permita obtener la información de este log, pero solo cuando se solicite.
  
   
