@@ -1,0 +1,10 @@
+config:
+  target: "http://localhost:5000"
+  phases:
+    - duration: 30
+      arrivalRate: 100
+      name: Carga de datos
+scenarios:
+  - flow:
+      - get:
+          url: "/trips/post_random_trip"
